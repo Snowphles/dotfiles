@@ -1,9 +1,9 @@
-from typing import List  # noqa: F401
-
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from qtile_extras import widget
+from qtile_extras.widget.decorations import PowerLineDecoration
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -38,7 +38,7 @@ keys = [
     Key([mod, "shift"], "s", lazy.spawn('spotify')),
     Key([mod, "shift"], "f", lazy.spawn('firefox')),
     Key([mod, "shift"], "Return", lazy.spawn('thunar')),
-    Key([mod, "shift"], "Return", lazy.spawn('alacritty -e ranger')),
+    #Key([mod, "shift"], "Return", lazy.spawn('alacritty -e ranger')),
     Key([mod, "shift"], "g", lazy.spawn('steam-runtime')),
     Key([mod, "shift"], "v", lazy.spawn('lutris')),
     Key([mod, "shift"], "KP_End", lazy.spawn('element-desktop --profile=snowphie')),
@@ -111,6 +111,11 @@ def init_widgets_defaults():
 widget_defaults = init_widgets_defaults()
 extension_defaults = widget_defaults.copy()
 
+powerline = {
+    "decorations": [
+        PowerLineDecoration(path="forward_slash")
+    ]
+}
 screens = [
     #~~~~~~~~~~~~~~~~~~~Main Monitor~~~~~~~~~~~~~~~~~~~
     Screen(
@@ -121,22 +126,26 @@ screens = [
             widget.TaskList(
                 icon_size=0,
                 max_title_width=120,
+                **powerline
                 ),
             widget.KeyboardLayout(
                 fmt=' Keyboard: {} ',
                 display_map={'us': 'Frens','fr': 'Sophie'},
                 configured_keyboards=['fr','us'],
-                background="#9C27B0"
+                background="#9C27B0",
+                **powerline
                 ),
             widget.PulseVolume(
                 fmt=' Vol: {} ',
                 background="#673AB7",
-                limit_max_volume=True
+                limit_max_volume=True,
+                **powerline
                 ),
             widget.OpenWeather(
                 format=' {location_city}: {main_temp}°{units_temperature} | {humidity}% ',
                 location='Brisbane',
-                background="#3F51B5"
+                background="#3F51B5",
+                **powerline
                 ),
             widget.Clock(
                 format=' %d %B %Y | %a %I:%M %p ',
@@ -169,23 +178,28 @@ screens = [
                 ),
             widget.Sep(
                        linewidth = 0,
-                       padding = 12
+                       padding = 12,
+                       **powerline
                        ),
 
             widget.NvidiaSensors(
                 format=' GPU:{temp}°C ',
-                background="#9C27B0"),
+                background="#9C27B0",
+                **powerline
+                ),
             widget.ThermalSensor(
                 format=' CPU: {temp:.0f}{unit}',
                 background="#673AB7"
                 ),
             widget.CPU(
                 format='| {load_percent}%',
-                background="#673AB7"
+                background="#673AB7",
+                **powerline
                 ),
             widget.Memory(
                 format=' MEM {MemPercent}% ',
                 background="#3F51B5",
+                **powerline
                 ),
             widget.Clock(
                 format=' %d %B %Y | %a %I:%M %p ',
