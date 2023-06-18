@@ -39,6 +39,7 @@ keys = [
     Key([mod, "shift"], "f", lazy.spawn('firefox')),
     Key([mod, "shift"], "Return", lazy.spawn('thunar')),
     #Key([mod, "shift"], "Return", lazy.spawn('alacritty -e ranger')),
+    Key([mod, "shift"], "p", lazy.spawn('alacritty -e htop')),
     Key([mod, "shift"], "g", lazy.spawn('steam-runtime')),
     Key([mod, "shift"], "v", lazy.spawn('lutris')),
     Key([mod, "shift"], "KP_End", lazy.spawn('element-desktop --profile=snowphie')),
