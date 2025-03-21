@@ -62,11 +62,11 @@
   /* background */
   --background-primary: var(--background-1);
   --background-primary-alt: var(--background-1);
-  --background-secondary: var(--background-1);
-  --background-secondary-alt: var(--background-1);
-  --background-tertiary: var(--background-2);
+  --background-secondary: var(--background-2);
+  --background-secondary-alt: var(--background-2);
+  --background-tertiary: var(--background-1);
   --background-accent-gradient: var(--background-2);
-  --background-floating: var(--background-1);
+  /--background-floating: var(--background-1);
   --background-mentioned: #bde6fb10;
   --background-mentioned-hover: #bde6fb15;
   /* modifiers */
@@ -93,7 +93,7 @@
   --info-warning-foreground: var(--accent-color);
   --tab-selected: #354249;
   --switch: #3d4c53;
-  --activity-card-background: var(--background-1);
+  --activity-card-background: var(--background-2);
   --brand-experiment: var(--accent-color) !important;
   /* buttons */
   --button-background: #2a3439;
