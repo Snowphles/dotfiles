@@ -3,7 +3,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from qtile_extras import widget
-from qtile_extras.widget.decorations import PowerLineDecoration
+from qtile_extras.widget.decorations import RectDecoration, PowerLineDecoration
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -34,7 +34,7 @@ keys = [
     Key([mod, "control"], "r", lazy.restart(),              desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(),             desc="Shutdown Qtile"),
     #~~~~~~~~~~~~~~~General Applications~~~~~~~~~~~~~~~
-    Key([mod, "shift"], "d", lazy.spawn('discord-ptb')),
+    Key([mod, "shift"], "d", lazy.spawn('vesktop')),
     Key([mod, "shift"], "s", lazy.spawn('spotify')),
     Key([mod, "shift"], "f", lazy.spawn('firefox')),
     Key([mod, "shift"], "Return", lazy.spawn('thunar')),
@@ -42,8 +42,6 @@ keys = [
     Key([mod, "shift"], "p", lazy.spawn('alacritty -e htop')),
     Key([mod, "shift"], "g", lazy.spawn('steam-runtime')),
     Key([mod, "shift"], "v", lazy.spawn('lutris')),
-    Key([mod, "shift"], "KP_End", lazy.spawn('element-desktop --profile=snowphie')),
-    Key([mod, "shift"], "KP_Down", lazy.spawn('element-desktop --profile=snowphii')),
     Key([mod, "control"], "s", lazy.spawn('flameshot gui')),
 ]
 
@@ -114,43 +112,48 @@ extension_defaults = widget_defaults.copy()
 
 powerline = {
     "decorations": [
-        PowerLineDecoration(path="forward_slash")
-    ]
+        #PowerLineDecoration(path="arrow_left"),
+        RectDecoration(colour="#41425d", radius=8, filled=True, group=False, padding_x=2, padding_y=1)
+
+    ],
+
 }
 screens = [
     #~~~~~~~~~~~~~~~~~~~Main Monitor~~~~~~~~~~~~~~~~~~~
     Screen(
         top=bar.Bar(
             [
-            widget.GroupBox(),
+            widget.GroupBox(
+                disable_drag=True,
+                inactive="#111221",
+                **powerline
+                ),
             widget.Prompt(),
             widget.TaskList(
-                icon_size=0,
-                max_title_width=120,
-                **powerline
+                icon_size=12,
+                max_title_width=100,
+                padding_x=8,
+                padding_y=-1
                 ),
             widget.KeyboardLayout(
                 fmt=' Keyboard: {} ',
                 display_map={'us': 'Frens','fr': 'Sophie'},
                 configured_keyboards=['fr','us'],
-                background="#9C27B0",
                 **powerline
                 ),
-            widget.PulseVolume(
+            widget.Volume(
                 fmt=' Vol: {} ',
-                background="#673AB7",
                 limit_max_volume=True,
                 **powerline
                 ),
             widget.OpenWeather(
                 format=' {location_city}: {main_temp}°{units_temperature} | {humidity}% ',
                 location='Brisbane',
-                background="#3F51B5",
                 **powerline
                 ),
             widget.Clock(
                 format=' %d %B %Y | %a %I:%M %p ',
-                background="#3280bd"
+                **powerline
                 )
             ],
             20,
@@ -160,7 +163,11 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-            widget.GroupBox(),
+            widget.GroupBox(
+                disable_drag=True,
+                inactive="#111221",
+                **powerline
+                ),
             widget.Prompt(),
             widget.Sep(
                 linewidth = 0,
@@ -168,43 +175,35 @@ screens = [
                 ),
             widget.TaskList(
                 icon_size=12,
-                max_title_width=180,
+                max_title_width=100,
                 padding_x=8,
-                padding_y=0
+                padding_y=-1
                 ),
             widget.Systray(
                 fmt='Vol: {} ',
-                padding=7
-                #background="#E91E63"
+                padding=7,
                 ),
             widget.Sep(
                        linewidth = 0,
                        padding = 12,
-                       **powerline
                        ),
-
-            widget.NvidiaSensors(
-                format=' GPU:{temp}°C ',
-                background="#9C27B0",
-                **powerline
-                ),
             widget.ThermalSensor(
                 format=' CPU: {temp:.0f}{unit}',
-                background="#673AB7"
+                extrawidth=10,
+                **powerline
                 ),
             widget.CPU(
-                format='| {load_percent}%',
-                background="#673AB7",
+                format='CPU: {load_percent}%',
                 **powerline
                 ),
             widget.Memory(
                 format=' MEM {MemPercent}% ',
-                background="#3F51B5",
                 **powerline
                 ),
             widget.Clock(
                 format=' %d %B %Y | %a %I:%M %p ',
-                background="#3280bd"),
+                **powerline
+                ),
         ],
         20,
     ),
