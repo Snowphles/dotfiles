@@ -52,5 +52,3 @@ alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/mas
 
 # Bash Shell
 PS1='[\u@\h \W]\$ '
-# Created by `pipx` on 2023-01-03 13:36:10
-export PATH="$PATH:/home/snowphie/.local/bin"
