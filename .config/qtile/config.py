@@ -14,7 +14,7 @@ keys = [
     Key([mod], "l", lazy.layout.right(),                    desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(),                     desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(),                       desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),                 desc="Move window focus to other window"),
+    #Key([mod], "space", lazy.layout.next(),                 desc="Move window focus to other window"),
     #~~~~~~~~~~~~~~~~~~Moving Windows~~~~~~~~~~~~~~~~~~
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(),    desc="Move window to the left"),
     Key([mod, "shift"], "l", lazy.layout.shuffle_right(),   desc="Move window to the right"),
@@ -35,19 +35,19 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(),             desc="Shutdown Qtile"),
     #~~~~~~~~~~~~~~~General Applications~~~~~~~~~~~~~~~
     Key([mod, "shift"], "d", lazy.spawn('vesktop')),
-    Key([mod, "shift"], "s", lazy.spawn('spotify')),
+    Key([mod, "shift"], "s", lazy.spawn('spotify-launcher')),
     Key([mod, "shift"], "f", lazy.spawn('firefox')),
     Key([mod, "shift"], "Return", lazy.spawn('thunar')),
-    #Key([mod, "shift"], "Return", lazy.spawn('alacritty -e ranger')),
     Key([mod, "shift"], "p", lazy.spawn('alacritty -e htop')),
-    Key([mod, "shift"], "g", lazy.spawn('steam-runtime')),
+    Key([mod, "shift"], "g", lazy.spawn('steam')),
     Key([mod, "shift"], "v", lazy.spawn('lutris')),
     Key([mod, "control"], "s", lazy.spawn('flameshot gui')),
+    Key([mod, "shift"], "i", lazy.spawn('alacritty -e inori')),
 ]
 
 groups = []
 group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "minus",]
-group_labels = ["  ", "  ", "  ", "  ", "  ", "  ",]
+group_labels = ["  ", "  ", "  ", "  ", "  ", "  ",]
 
 for i in range(len(group_names)):
     groups.append(
@@ -135,24 +135,35 @@ screens = [
                 padding_x=8,
                 padding_y=-1
                 ),
-            widget.KeyboardLayout(
-                fmt=' Keyboard: {} ',
-                display_map={'us': 'Frens','fr': 'Sophie'},
-                configured_keyboards=['fr','us'],
+            widget.Volume(
+                fmt='  {} ',
+                limit_max_volume=True,
+                mute_format=' No Audio ',
                 **powerline
                 ),
             widget.Volume(
-                fmt=' Vol: {} ',
+                fmt='  {} ',
                 limit_max_volume=True,
+                volume_app='mpd',
+                **powerline
+                ),
+            widget.Mpd2(
+                status_format=' {play_status} {artist} | {title} ',
+                idle_format='{play_status} {idle_message}', idle_message='No Music',
                 **powerline
                 ),
             widget.OpenWeather(
-                format=' {location_city}: {main_temp}°{units_temperature} | {humidity}% ',
+                format='  {main_temp}°{units_temperature} | {humidity}% ',
                 location='Brisbane',
                 **powerline
                 ),
             widget.Clock(
-                format=' %d %B %Y | %a %I:%M %p ',
+                timezone="US/CST6CDT",
+                format='  %a %I:%M %p ',
+                **powerline
+                ),
+            widget.Clock(
+                format='  %a %I:%M %p ',
                 **powerline
                 )
             ],
@@ -187,17 +198,22 @@ screens = [
                        linewidth = 0,
                        padding = 12,
                        ),
+            widget.CheckUpdates(
+                display_format='  {updates}',
+                distro='Arch_yay',
+                **powerline
+                ),
             widget.ThermalSensor(
-                format=' CPU: {temp:.0f}{unit}',
+                format='  {temp:.0f}{unit}',
                 extrawidth=10,
                 **powerline
                 ),
             widget.CPU(
-                format='CPU: {load_percent}%',
+                format='  {load_percent}%',
                 **powerline
                 ),
             widget.Memory(
-                format=' MEM {MemPercent}% ',
+                format='  {MemPercent}% ',
                 **powerline
                 ),
             widget.Clock(
